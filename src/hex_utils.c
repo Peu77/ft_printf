@@ -1,18 +1,22 @@
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static size_t ft_hexlen(unsigned long long number, int has_prefix) {
     size_t len = 0;
-    while (number) {
+    while (1) {
         number /= 16;
         len++;
+
+        if (number == 0)
+            break;
     }
     if (has_prefix)
         return len + 2;
     return len;
 }
 
-char *ft_itoa_hex(unsigned long long number, int has_prefix) {
+char *ft_itoa_hex(unsigned long number, int has_prefix) {
     const char *hex = "0123456789abcdef";
     const size_t len = ft_hexlen(number, has_prefix);
     char *str;
@@ -28,10 +32,13 @@ char *ft_itoa_hex(unsigned long long number, int has_prefix) {
     }
 
     i = len - 1;
-    while (number) {
+    while (1) {
         str[i] = hex[number % 16];
         number /= 16;
         i--;
+
+        if (number == 0)
+            break;
     }
     return str;
 }

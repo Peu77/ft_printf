@@ -1,4 +1,4 @@
-#include "printf.h"
+#include "ft_printf.h"
 #include "libft.h"
 
 const char *print_string(t_flags *flags, va_list *args) {

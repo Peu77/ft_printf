@@ -49,6 +49,6 @@ const char *ft_itoa_unsigned(unsigned int number);
 
 int parse_flags(const char *format, t_flags *flags);
 
-char *ft_itoa_hex(long long number, int has_prefix);
+char *ft_itoa_hex(unsigned long number, int has_prefix);
 
 #endif

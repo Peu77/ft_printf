@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "printf.h"
+#include "ft_printf.h"
 #include "libft.h"
 #include <stdlib.h>
 
@@ -47,9 +47,12 @@ static size_t print_spaces(t_flags *flags, const int spaces, const char conversi
     return len;
 }
 
-static size_t apply_width(t_flags *flags, const char *str, size_t str_len, const char conversion) {
+static size_t apply_width_and_write(t_flags *flags, const char *str, size_t str_len, const char conversion) {
     const int spaces = flags->width - str_len;
     size_t len = 0;
+
+    if (str_len <= 0)
+        return print_spaces(flags, spaces, conversion);;
 
     if (flags->minus) {
         len += write(1, str, str_len);
@@ -57,7 +60,6 @@ static size_t apply_width(t_flags *flags, const char *str, size_t str_len, const
     } else {
         len += print_spaces(flags, spaces, conversion);
         len += write(1, str, str_len);
-        return 1;
     }
     return len;
 }
@@ -89,9 +91,11 @@ int ft_printf(const char *format, ...) {
             if (printer) {
                 i += offset;
                 const char *str = append_plus_if_needed(&flags, (char *) printer->print(&flags, &args), conversion);
-                const size_t str_len = ft_strlen(str);
+                size_t str_len = ft_strlen(str);
+                if (conversion == 'c' && str[0] == 0)
+                    str_len = 1;
 
-                len += apply_width(&flags, str, str_len, conversion);
+                len += apply_width_and_write(&flags, str, str_len, conversion);
                 free((void *) str);
             } else {
                 len += write(1, &format[i - 1], 2);
