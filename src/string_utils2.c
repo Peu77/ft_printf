@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:56:30 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 15:11:27 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 15:36:11 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ size_t	ft_numlen_long(long n)
 	}
 	return (len);
 }
-#include <stdio.h>
-
 void	itoa_recursive_long(char *str, long nbr, size_t start, size_t stop)
 {
 	if (start == stop - 1)
