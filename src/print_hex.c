@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:08 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 16:16:03 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 16:19:40 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,25 @@ const char	*print_hex(t_flags *flags, va_list *args)
 const char	*print_hex_upper(t_flags *flags, va_list *args)
 {
 	const unsigned int	number = va_arg(*args, unsigned int);
-	char				*str;
-	size_t				i;
+	t_nbr_len			nbr_len;
+	char				*buffer;
 
-	str = ft_itoa_hex(number, flags->hashtag);
-	i = 0;
-	while (str[i])
+	calculate_len(number, flags, &nbr_len);
+	buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
+	if (!buffer)
+		return (NULL);
+	if (flags->hashtag)
 	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-			str[i] -= 32;
-		i++;
+		buffer[0] = '0';
+		buffer[1] = 'x';
 	}
-	return (str);
+	ft_memset(buffer + nbr_len.has_prefix * 2, '0', nbr_len.zero_count);
+	itoa_recursive_hex(buffer, number, nbr_len.len - 1, nbr_len.has_prefix * 2
+		+ nbr_len.zero_count);
+	while (buffer[--nbr_len.len])
+	{
+		if (buffer[nbr_len.len] >= 'a' && buffer[nbr_len.len] <= 'z')
+			buffer[nbr_len.len] -= 32;
+	}
+	return (buffer);
 }
