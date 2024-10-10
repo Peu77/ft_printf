@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 15:42:01 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 22:31:03 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ static size_t print_spaces(t_flags *flags, const int spaces, const char conversi
     size_t len = 0;
     char c = ' ';
 
+    if (conversion == '%')
+        return 0;
+
     if (flags->zero && !flags->minus && !flags->dot && is_numeric_conversion(conversion))
         c = '0';
 
@@ -86,12 +89,12 @@ int ft_printf(const char *format, ...) {
         if (format[i] == '%') {
             t_flags flags = {0};
             i++;
-            const int offset = parse_flags(format + i, &flags);
+            const int offset = parse_flags(format + i, &flags, &args);
             const char conversion = format[i + offset];
             const t_printer *printer = get_printer(conversion);
             if (printer) {
                 i += offset;
-                const char *str =  printer->print(&flags, &args);
+                const char *str = printer->print(&flags, &args);
                 size_t str_len = ft_strlen(str);
                 if (conversion == 'c' && str[0] == 0)
                     str_len = 1;

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:16 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 21:31:09 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 22:29:50 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ size_t			ft_putstr(const char *str);
 
 const char		*ft_itoa_unsigned(unsigned int number);
 
-int				parse_flags(const char *format, t_flags *flags);
+int				parse_flags(const char *format, t_flags *flags, va_list *args);
 
 char			*generate_chars(char c, size_t len);
 

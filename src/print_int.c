@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:41:47 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 16:15:46 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 22:25:21 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ static void calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len,
 
     len_with_zeros = 0;
     len = raw_nbr_len;
+    if (flags->dot && flags->precision == 0 && nbr == 0) {
+        nbr_len->len = 0;
+        return;
+    }
     if ((flags->plus || flags->space || nbr < 0) && !ignore_sign) {
         len++;
         nbr_len->has_sign = true;
@@ -60,6 +64,8 @@ const char *print_int(t_flags *flags, va_list *args) {
     char *buffer;
 
     calculate_len(number, flags, &nbr_len, false);
+    if (nbr_len.len == 0)
+        return (ft_strdup(""));
     buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
     if (!buffer)
         return (NULL);
@@ -76,6 +82,8 @@ const char *print_unsigned(t_flags *flags, va_list *args) {
     char *buffer;
 
     calculate_len(number, flags, &nbr_len, true);
+    if (nbr_len.len == 0)
+        return (ft_strdup(""));
     buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
     if (!buffer)
         return (NULL);

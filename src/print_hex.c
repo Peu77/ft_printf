@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:08 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 16:19:40 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 22:26:54 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ static void calculate_len(unsigned int nbr, t_flags *flags, t_nbr_len *nbr_len) 
 
     len_with_zeros = 0;
     len = raw_nbr_len;
+    if (flags->dot && flags->precision == 0 && nbr == 0) {
+        nbr_len->len = 0;
+        return;
+    }
     if (flags->hashtag && nbr != 0) {
         len += 2;
         nbr_len->has_prefix = true;
@@ -74,6 +78,8 @@ const char *print_hex(t_flags *flags, va_list *args) {
     char *buffer;
 
     calculate_len(number, flags, &nbr_len);
+    if (nbr_len.len == 0)
+        return (ft_strdup(""));
     buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
     if (!buffer)
         return (NULL);
@@ -93,6 +99,8 @@ const char *print_hex_upper(t_flags *flags, va_list *args) {
     char *buffer;
 
     calculate_len(number, flags, &nbr_len);
+    if (nbr_len.len == 0)
+        return (ft_strdup(""));
     buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
     if (!buffer)
         return (NULL);
