@@ -6,23 +6,25 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:41:55 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 21:35:35 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 21:55:50 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
+#include <stdbool.h>
 
 typedef struct s_nbr_len {
     size_t len;
     size_t raw_nbr_len;
     size_t zero_count;
+    bool has_sign;
 } t_nbr_len;
 
 static size_t get_hex_len(unsigned long number) {
     size_t len;
 
-    len = 2;
+    len = 0;
     while (1) {
         number /= 16;
         len++;
@@ -47,9 +49,13 @@ static void calculate_len(unsigned long nbr, t_flags *flags, t_nbr_len *nbr_len)
     size_t len;
     const size_t raw_nbr_len = get_hex_len(nbr);
     size_t len_with_zeros;
-
     len_with_zeros = 0;
-    len = raw_nbr_len;
+    len = raw_nbr_len + 2;
+    if (flags->plus || flags->space) {
+        len++;
+        nbr_len->has_sign = true;
+    } else
+        nbr_len->has_sign = false;
     if (flags->dot)
         len_with_zeros = len + max(flags->precision - raw_nbr_len, 0);
     else if (flags->zero && flags->width > len && !flags->minus)
@@ -60,11 +66,10 @@ static void calculate_len(unsigned long nbr, t_flags *flags, t_nbr_len *nbr_len)
 }
 
 
-#include <stdio.h>
-
 const char *print_pointer(t_flags *flags, va_list *args) {
     const unsigned long number = va_arg(*args, unsigned long);
     t_nbr_len nbr_len;
+    size_t i;
     char *buffer;
     if (number == 0)
         return (ft_strdup("(nil)"));
@@ -72,10 +77,15 @@ const char *print_pointer(t_flags *flags, va_list *args) {
     buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
     if (!buffer)
         return (NULL);
-    buffer[0] = '0';
-    buffer[1] = 'x';
-    ft_memset(buffer + 2, '0', nbr_len.zero_count);
+    i = 0;
+    if (flags->plus)
+        buffer[i++] = '+';
+    else if (flags->space)
+        buffer[i++] = ' ';
+    buffer[i++] = '0';
+    buffer[i++] = 'x';
+    ft_memset(buffer + i, '0', nbr_len.zero_count);
     itoa_recursive_hex(buffer, number, nbr_len.len - 1,
-                       nbr_len.zero_count + 2);
+                       nbr_len.zero_count + i);
     return (buffer);
 }
