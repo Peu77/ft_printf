@@ -57,23 +57,13 @@ const char		*print_percent(t_flags *flags, va_list *args);
 
 // utils
 
-size_t			ft_putstr(const char *str);
-
-const char		*ft_itoa_unsigned(unsigned int number);
-
 int				parse_flags(const char *format, t_flags *flags, va_list *args);
-
-char			*generate_chars(char c, size_t len);
 
 size_t			ft_numlen_long(long n);
 
 int				max(int a, int b);
 
-int				min(int a, int b);
-
 void			itoa_recursive_long(char *str, long nbr, size_t start,
 					size_t stop);
-
-int             ft_abs(int n);
 
 #endif
