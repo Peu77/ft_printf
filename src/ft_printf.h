@@ -61,6 +61,7 @@ int				max(int a, int b);
 
 int				min(int a, int b);
 
-static void		itoa_recursive_long(char *str, long nbr, int start);
+void			itoa_recursive_long(char *str, long nbr, size_t start,
+					size_t stop);
 
 #endif

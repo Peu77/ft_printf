@@ -3,6 +3,6 @@
 
 int main(){
     const char* str = "% +05.10d";
-    printf(str, 423);
-    ft_printf(str, 423);
+    printf(str, 543);
+    ft_printf(str, 543);
 }

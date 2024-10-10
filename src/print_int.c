@@ -62,7 +62,7 @@ const char	*print_int(t_flags *flags, va_list *args)
 	add_sign(buffer, number, flags);
 	ft_memset(buffer + nbr_len.has_sign, '0', nbr_len.zero_count);
 	itoa_recursive_long(buffer, number,
-		nbr_len.len - 1);
+		nbr_len.len - 1, nbr_len.has_sign + nbr_len.zero_count);
 	return (buffer);
 }
 

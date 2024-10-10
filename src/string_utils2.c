@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:56:30 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 15:02:40 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 15:11:27 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,12 @@ size_t	ft_numlen_long(long n)
 }
 #include <stdio.h>
 
-void	itoa_recursive_long(char *str, long nbr, int start)
+void	itoa_recursive_long(char *str, long nbr, size_t start, size_t stop)
 {
-	if (nbr == 0)
+	if (start == stop - 1)
 	{
 		return ;
 	}
-	itoa_recursive_long(str, nbr / 10, start - 1);
-    printf("start: %d %ld\n", start, nbr % 10);
+	itoa_recursive_long(str, nbr / 10, start - 1, stop);
 	str[start] = nbr % 10 + '0';
 }
