@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:17:17 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 12:17:20 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 12:17:29 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	parse_flags(const char *format, t_flags *flags)
 		if (format[i] == '#')
 			flags->hashtag = 1;
 		if (format[i] == '0')
-			flags->zero = 1;    
+			flags->zero = 1;
 		if (format[i] == '-')
 			flags->minus = 1;
 		if (format[i] == ' ')
