@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_int.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 15:41:47 by eebert            #+#    #+#             */
+/*   Updated: 2024/10/10 15:41:49 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include "libft.h"
 #include <stdbool.h>
@@ -12,7 +24,8 @@ typedef struct s_nbr_len
 	bool	has_sign;
 }			t_nbr_len;
 
-static void	calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len, bool ignore_sign)
+static void	calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len,
+		bool ignore_sign)
 {
 	size_t			len;
 	const size_t	raw_nbr_len = ft_numlen_long(nbr);
@@ -36,6 +49,7 @@ static void	calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len, bool ign
 	nbr_len->len = max(len, len_with_zeros);
 	nbr_len->raw_nbr_len = raw_nbr_len;
 }
+
 void	add_sign(char *buffer, long nbr, t_flags *flags)
 {
 	if (nbr < 0)
