@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:41:55 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 21:29:31 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 21:35:35 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void calculate_len(unsigned long nbr, t_flags *flags, t_nbr_len *nbr_len)
     size_t len_with_zeros;
 
     len_with_zeros = 0;
-    len = raw_nbr_len + 2;
+    len = raw_nbr_len;
     if (flags->dot)
         len_with_zeros = len + max(flags->precision - raw_nbr_len, 0);
     else if (flags->zero && flags->width > len && !flags->minus)

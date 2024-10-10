@@ -6,7 +6,7 @@ LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
 NAME = libftprintf.a
 CC = cc
-CFLAGS = -Wall -Wextra -I ../libft -g -fsanitize=address
+CFLAGS = -Wall -Wextra -I ../libft
 
 all: $(NAME)
 
