@@ -64,17 +64,6 @@ static size_t apply_width_and_write(t_flags *flags, const char *str, size_t str_
     return len;
 }
 
-static char *append_plus_if_needed(t_flags *flags, char *str, const char conversion) {
-    char *new_str;
-
-    new_str = str;
-    if (flags->plus && str[0] != '-' && is_numeric_conversion(conversion)) {
-        new_str = ft_strjoin("+", str);
-        free(str);
-    }
-    return new_str;
-}
-
 int ft_printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
@@ -90,7 +79,7 @@ int ft_printf(const char *format, ...) {
             const t_printer *printer = get_printer(conversion);
             if (printer) {
                 i += offset;
-                const char *str = append_plus_if_needed(&flags, (char *) printer->print(&flags, &args), conversion);
+                const char *str =  printer->print(&flags, &args);
                 size_t str_len = ft_strlen(str);
                 if (conversion == 'c' && str[0] == 0)
                     str_len = 1;
