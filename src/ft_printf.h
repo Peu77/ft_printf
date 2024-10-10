@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:16 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 15:42:17 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 21:31:09 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 typedef struct s_flags
 {
 	size_t		width;
-	int			precision;
+	size_t 		precision;
 	int			zero;
 	int			minus;
 	int			space;
@@ -62,8 +62,6 @@ size_t			ft_putstr(const char *str);
 const char		*ft_itoa_unsigned(unsigned int number);
 
 int				parse_flags(const char *format, t_flags *flags);
-
-char			*ft_itoa_hex(unsigned long number, int has_prefix);
 
 char			*generate_chars(char c, size_t len);
 

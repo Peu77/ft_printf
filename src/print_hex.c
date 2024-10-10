@@ -96,7 +96,7 @@ const char *print_hex_upper(t_flags *flags, va_list *args) {
     buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
     if (!buffer)
         return (NULL);
-    if (flags->hashtag) {
+    if (nbr_len.has_prefix) {
         buffer[0] = '0';
         buffer[1] = 'x';
     }
