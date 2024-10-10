@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:41:47 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 15:53:09 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 16:15:46 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len,
 		len++;
 		nbr_len->has_sign = true;
 	}
+	else
+		nbr_len->has_sign = false;
 	if (flags->zero)
 	{
 		if (flags->dot)
