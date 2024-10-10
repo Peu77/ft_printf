@@ -1,6 +1,29 @@
 #include "libft.h"
 #include <unistd.h>
 
+char	*append_zeros_after_prefix(char *str, int zeros, const char *prefix)
+{
+	const int	have_prefix = ft_strchr(prefix, '0') != NULL;
+	const char	*zeros = generate_chars('0', zeros);
+	char		*content_after_prefix;
+	char		*result;
+
+	if (!zeros)
+		return (NULL);
+	if (!have_prefix)
+		return (ft_strjoin(zeros, str));
+	content_after_prefix = ft_strdup(str + ft_strlen(prefix));
+	if (!content_after_prefix)
+	{
+		free(zeros);
+		return (NULL);
+	}
+	result = ft_strjoin(prefix, ft_strjoin(zeros, content_after_prefix));
+	free(zeros);
+	free(content_after_prefix);
+	return (result);
+}
+
 size_t	ft_putstr(const char *str)
 {
 	size_t	len;

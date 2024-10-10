@@ -1,4 +1,4 @@
-SRCS = printf.c print_int.c print_char.c print_string.c string_utils.c flags.c print_hex.c print_pointer.c print_percent.c hex_utils.c
+SRCS = printf.c print_int.c print_char.c print_string.c string_utils.c flags.c print_hex.c print_pointer.c print_percent.c hex_utils.c string_utils2.c utils.c
 SRC_DIR = src
 OBJS = $(SRCS:.c=.o)
 OBJS := $(addprefix $(SRC_DIR)/, $(OBJS))

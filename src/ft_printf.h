@@ -53,4 +53,8 @@ int				parse_flags(const char *format, t_flags *flags);
 
 char			*ft_itoa_hex(unsigned long number, int has_prefix);
 
+char			*generate_chars(char c, size_t len);
+
+size_t			ft_numlen_long(long n);
+
 #endif
