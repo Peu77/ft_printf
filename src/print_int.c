@@ -28,8 +28,7 @@ static void	calculate_len(long number, t_flags *flags, t_nbr_len *nbr_len)
 	if (flags->zero && flags->width > len)
 	{
 		if (flags->dot)
-			len_with_zeros = max(flags->width, len + max(flags->precision
-						- raw_nbr_len, 0));
+			len_with_zeros = len + max(flags->precision - raw_nbr_len, 0);
 		else
 			len_with_zeros = max(flags->width, len);
 	}
