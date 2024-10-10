@@ -1,10 +1,12 @@
 #include "libft.h"
 #include <unistd.h>
+#include <stdlib.h>
+#include "ft_printf.h"
 
-char	*append_zeros_after_prefix(char *str, int zeros, const char *prefix)
+char	*append_zeros_after_prefix(char *str, size_t zero_count, const char *prefix)
 {
 	const int	have_prefix = ft_strchr(prefix, '0') != NULL;
-	const char	*zeros = generate_chars('0', zeros);
+	char	*zeros = generate_chars('0', zero_count);
 	char		*content_after_prefix;
 	char		*result;
 

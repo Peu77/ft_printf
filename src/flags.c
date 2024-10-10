@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:17:17 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 12:53:42 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/10 14:26:30 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ static int	is_flag(const char c)
 	return (c == '#' || c == '0' || c == '-' || c == ' ' || c == '+');
 }
 
-void	parse_precision(const char *format, t_flags *flags, int i *)
+void	parse_precision(const char *format, t_flags *flags, int *i)
 {
-	if (format[i] == '.')
+	if (format[*i] == '.')
 	{
 		flags->dot = 1;
-		i++;
+		(*i)++;
 		flags->precision = parse_number(format, i);
 	}
 }

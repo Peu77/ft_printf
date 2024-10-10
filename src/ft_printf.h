@@ -2,7 +2,7 @@
 # define PRINTF_H
 
 # include <stdarg.h>
-# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct s_flags
 {
@@ -56,5 +56,11 @@ char			*ft_itoa_hex(unsigned long number, int has_prefix);
 char			*generate_chars(char c, size_t len);
 
 size_t			ft_numlen_long(long n);
+
+int				max(int a, int b);
+
+int				min(int a, int b);
+
+static void		itoa_recursive_long(char *str, long nbr, int start);
 
 #endif
