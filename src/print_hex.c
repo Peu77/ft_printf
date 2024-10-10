@@ -54,7 +54,7 @@ static void calculate_len(unsigned int nbr, t_flags *flags, t_nbr_len *nbr_len) 
 
     len_with_zeros = 0;
     len = raw_nbr_len;
-    if (flags->hashtag) {
+    if (flags->hashtag && nbr != 0) {
         len += 2;
         nbr_len->has_prefix = true;
     } else
@@ -77,7 +77,7 @@ const char *print_hex(t_flags *flags, va_list *args) {
     buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
     if (!buffer)
         return (NULL);
-    if (flags->hashtag) {
+    if (nbr_len.has_prefix) {
         buffer[0] = '0';
         buffer[1] = 'x';
     }
