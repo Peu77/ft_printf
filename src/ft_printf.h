@@ -76,4 +76,6 @@ int				min(int a, int b);
 void			itoa_recursive_long(char *str, long nbr, size_t start,
 					size_t stop);
 
+int             ft_abs(int n);
+
 #endif

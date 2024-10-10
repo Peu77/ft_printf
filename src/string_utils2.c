@@ -11,48 +11,50 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "ft_printf.h"
 
-char	*generate_chars(char c, size_t len)
-{
-	char	*str;
-	size_t	i;
+char *generate_chars(char c, size_t len) {
+    char *str;
+    size_t i;
 
-	str = malloc(len + 1);
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = c;
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+    str = malloc(len + 1);
+    if (!str)
+        return (NULL);
+    i = 0;
+    while (i < len) {
+        str[i] = c;
+        i++;
+    }
+    str[i] = '\0';
+    return (str);
 }
 // get the length of a number without sign
 
-size_t	ft_numlen_long(long n)
-{
-	size_t	len;
+size_t ft_numlen_long(long n) {
+    size_t len;
 
-	len = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-		n = -n;
-	while (n)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
+    len = 0;
+    if (n == 0)
+        return (1);
+    if (n < 0)
+        n = -n;
+    while (n) {
+        n /= 10;
+        len++;
+    }
+    return (len);
 }
-void	itoa_recursive_long(char *str, long nbr, size_t start, size_t stop)
-{
-	if (start == stop - 1)
-	{
-		return ;
-	}
-	itoa_recursive_long(str, nbr / 10, start - 1, stop);
-	str[start] = nbr % 10 + '0';
+
+void itoa_recursive_long(char *str, long nbr, size_t start, size_t stop) {
+    if (start == stop - 1) {
+        return;
+    }
+    itoa_recursive_long(str, nbr / 10, start - 1, stop);
+    str[start] = ft_abs(nbr % 10) + '0';
+}
+
+int ft_abs(int n) {
+    if (n < 0)
+        return -n;
+    return n;
 }
