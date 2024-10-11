@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 12:46:13 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/11 12:58:34 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,18 @@ static size_t apply_width_and_write(t_flags *flags, const char *str, size_t str_
     return len;
 }
 
+static size_t print_printer(const t_printer *printer, t_flags *flags, va_list *args) {
+    const char *str = printer->print(flags, args);
+    size_t str_len = ft_strlen(str);
+    if (printer->type == 'c' && str[0] == 0)
+        str_len = 1;
+
+    size_t len = apply_width_and_write(flags, str, str_len, printer->type);
+    if (str)
+        free((void *) str);
+    return len;
+}
+
 int ft_printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
@@ -78,27 +90,23 @@ int ft_printf(const char *format, ...) {
     size_t len = 0;
 
     while (format[i]) {
-        if (format[i] == '%') {
-            t_flags flags = {0};
-            i++;
-            const int offset = parse_flags(format + i, &flags, &args);
-            const char conversion = format[i + offset];
-            const t_printer *printer = get_printer(conversion);
-            if (printer) {
-                i += offset;
-                const char *str = printer->print(&flags, &args);
-                size_t str_len = ft_strlen(str);
-                if (conversion == 'c' && str[0] == 0)
-                    str_len = 1;
+        if (format[i] != '%') {
+            len += write(1, &format[i++], 1);
+            continue;
+        }
 
-                len += apply_width_and_write(&flags, str, str_len, conversion);
-                free((void *) str);
-            } else {
-                len += write(1, &format[i - 1], 2);
-            }
-        } else
-            len += write(1, &format[i], 1);
+        t_flags flags = {0};
         i++;
+        const int offset = parse_flags(format + i, &flags, &args);
+        const char conversion = format[i + offset];
+        const t_printer *printer = get_printer(conversion);
+        if (!printer) {
+            len += write(1, &format[i - 1], 2);
+            i++;
+            continue;
+        }
+        len += print_printer(printer, &flags, &args);
+        i += offset + 1;
     }
 
     va_end(args);
