@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_percent.c                                    :+:      :+:    :+:   */
+/*   print_hex.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 15:41:52 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 14:03:39 by eebert           ###   ########.fr       */
+/*   Created: 2024/10/11 14:08:28 by eebert            #+#    #+#             */
+/*   Updated: 2024/10/11 14:22:42 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "libft.h"
+#ifndef PRINT_HEX_H
+# define PRINT_HEX_H
 
-char	*print_percent(t_flags *flags, va_list *args)
+# include <stdbool.h>
+# include <unistd.h>
+
+typedef struct s_nbr_len
 {
-	(void)flags;
-	(void)args;
-	return (ft_strdup("%"));
-}
+	size_t	len;
+	size_t	raw_nbr_len;
+	size_t	zero_count;
+	bool	has_prefix;
+}			t_nbr_len;
+
+#endif
