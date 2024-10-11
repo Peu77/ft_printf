@@ -1,4 +1,4 @@
-SRCS = printf.c print_int.c print_char.c print_string.c flags.c print_hex.c print_pointer.c print_percent.c string_utils.c utils.c
+SRCS = printf.c print_int.c print_char.c print_string.c flags.c print_hex.c print_pointer.c print_percent.c utils.c
 SRC_DIR = src
 OBJS = $(SRCS:.c=.o)
 OBJS := $(addprefix $(SRC_DIR)/, $(OBJS))
@@ -6,7 +6,7 @@ LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
 NAME = libftprintf.a
 CC = cc
-CFLAGS = -Wall -Wextra -I ../libft
+CFLAGS = -Wall -Wextra -Werror -I ../libft
 
 all: $(NAME)
 
@@ -20,11 +20,8 @@ $(LIBFT): $(LIBFT_PATH)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(OBJS) $(BONUS_OBJS)
-	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
-
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)

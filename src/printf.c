@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/10 22:31:03 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/11 12:46:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,15 @@ static const t_printer *get_printer(char type) {
     return NULL;
 }
 
-static int is_numeric_conversion(char c) {
-    return c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X' || c == 'p';
-}
-
-static size_t print_spaces(t_flags *flags, const int spaces, const char conversion) {
+static size_t print_spaces(const int spaces, const char conversion) {
     int i = 0;
     size_t len = 0;
-    char c = ' ';
 
     if (conversion == '%')
         return 0;
 
-    if (flags->zero && !flags->minus && !flags->dot && is_numeric_conversion(conversion))
-        c = '0';
-
     while (i < spaces) {
-        len += write(1, &c, 1);
+        len += write(1, " ", 1);
         i++;
     }
     return len;
@@ -67,13 +59,13 @@ static size_t apply_width_and_write(t_flags *flags, const char *str, size_t str_
     size_t len = 0;
 
     if (str_len <= 0)
-        return print_spaces(flags, spaces, conversion);;
+        return print_spaces(spaces, conversion);;
 
     if (flags->minus) {
         len += write(1, str, str_len);
-        len += print_spaces(flags, spaces, conversion);
+        len += print_spaces(spaces, conversion);
     } else {
-        len += print_spaces(flags, spaces, conversion);
+        len += print_spaces(spaces, conversion);
         len += write(1, str, str_len);
     }
     return len;
