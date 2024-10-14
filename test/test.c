@@ -5,10 +5,7 @@
 #define INT_MAX 2147483647
 
 int main(){
-   int printed = ft_printf("% .d%%\n", 0);
-   int expected = printf("% .d%%\n", 0);
-
-    printf("Expected: %d\n", expected);
-    printf("Got: %d\n", printed);
+    printf("printf: %423,\n", 5);
+    ft_printf("my: %423\n", 5);
   
 }

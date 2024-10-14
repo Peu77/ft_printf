@@ -18,6 +18,7 @@
         "__hash_table": "c",
         "__tree": "c",
         "forward_list": "c",
-        "limits": "c"
+        "limits": "c",
+        "sstream": "c"
     }
 }
