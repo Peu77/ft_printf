@@ -6,7 +6,7 @@ LIBFT_PATH = libft
 LIBFT = $(LIBFT_PATH)/libft.a
 NAME = libftprintf.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I ../libft
+CFLAGS = -Wall -Wextra -Werror -I libft
 
 all: $(NAME)
 
@@ -17,10 +17,8 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT): $(LIBFT_PATH)
 	make -C $(LIBFT_PATH)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-bonus: $(OBJS) $(BONUS_OBJS)
+bonus: $(LIBFT) $(OBJS) $(BONUS_OBJS)
+	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
 clean:
@@ -31,4 +29,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
