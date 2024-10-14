@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 14:37:10 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/14 14:57:29 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static size_t	apply_width_and_write(t_flags *flags, const char *str,
 	size_t	len;
 
 	len = 0;
-	if (conversion == 'c' && str[0] == 0)
+	if (conversion == 'c')
 	{
 		str_len = 1;
 	}
