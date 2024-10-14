@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:41:47 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/14 16:26:18 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/14 16:33:26 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+int	handle_special_case(t_flags *flags, t_nbr_len *nbr_len, int ignore_sign)
+{
+	if ((flags->plus || flags->space) && !ignore_sign)
+	{
+		nbr_len->len = 1;
+		nbr_len->raw_nbr_len = 0;
+		nbr_len->zero_count = 0;
+		nbr_len->has_sign = true;
+		return (1);
+	}
+	return (0);
+}
 
 static void	calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len,
 		bool ignore_sign)
@@ -29,14 +42,8 @@ static void	calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len,
 	len = raw_nbr_len;
 	if (flags->dot && flags->precision == 0 && nbr == 0)
 	{
-		if ((flags->plus || flags->space) && !ignore_sign)
-		{
-			nbr_len->len = 1;
-			nbr_len->raw_nbr_len = 0;
-			nbr_len->zero_count = 0;
-			nbr_len->has_sign = true;
+		if (handle_special_case(flags, nbr_len, ignore_sign))
 			return ;
-		}
 		nbr_len->len = 0;
 		return ;
 	}
