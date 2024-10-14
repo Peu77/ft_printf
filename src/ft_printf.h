@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:16 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 14:31:04 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/14 15:33:19 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,17 @@ typedef struct s_flags
 	int		hashtag;
 }			t_flags;
 
+typedef struct s_print_result
+{
+	char	*str;
+	size_t	len;
+}			t_print_result;
+
 typedef struct s_printer
 {
 	char	type;
 
-	char	*(*print)(t_flags *, va_list *);
+	void	(*print)(t_flags *, va_list *, t_print_result *);
 }			t_printer;
 
 t_printer	*get_printer(char type);
@@ -41,21 +47,25 @@ int			ft_printf(const char *format, ...);
 
 // print functions
 
-char		*print_char(t_flags *flags, va_list *args);
+void		print_char(t_flags *flags, va_list *args, t_print_result *result);
 
-char		*print_string(t_flags *flags, va_list *args);
+void		print_string(t_flags *flags, va_list *args, t_print_result *result);
 
-char		*print_pointer(t_flags *flags, va_list *args);
+void		print_pointer(t_flags *flags, va_list *args,
+				t_print_result *result);
 
-char		*print_int(t_flags *flags, va_list *args);
+void		print_int(t_flags *flags, va_list *args, t_print_result *result);
 
-char		*print_unsigned(t_flags *flags, va_list *args);
+void		print_unsigned(t_flags *flags, va_list *args,
+				t_print_result *result);
 
-char		*print_hex(t_flags *flags, va_list *args);
+void		print_hex(t_flags *flags, va_list *args, t_print_result *result);
 
-char		*print_hex_upper(t_flags *flags, va_list *args);
+void		print_hex_upper(t_flags *flags, va_list *args,
+				t_print_result *result);
 
-char		*print_percent(t_flags *flags, va_list *args);
+void		print_percent(t_flags *flags, va_list *args,
+				t_print_result *result);
 
 // utils
 

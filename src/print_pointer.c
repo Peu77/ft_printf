@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:41:55 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 14:11:40 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/14 15:46:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,17 @@ static void	calculate_len(unsigned long nbr, t_flags *flags, t_nbr_len *nbr_len)
 	nbr_len->raw_nbr_len = raw_nbr_len;
 }
 
-char	*print_pointer(t_flags *flags, va_list *args)
+void	print_pointer(t_flags *flags, va_list *args, t_print_result *result)
 {
 	const unsigned long	number = va_arg(*args, unsigned long);
 	t_nbr_len			nbr_len;
 	size_t				i;
 	char				*buffer;
 
-	if (number == 0)
-		return (ft_strdup("(nil)"));
 	calculate_len(number, flags, &nbr_len);
 	buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return ;
 	i = 0;
 	if (flags->plus)
 		buffer[i++] = '+';
@@ -89,5 +87,6 @@ char	*print_pointer(t_flags *flags, va_list *args)
 	buffer[i++] = 'x';
 	ft_memset(buffer + i, '0', nbr_len.zero_count);
 	itoa_recursive_hex(buffer, number, nbr_len.len - 1, nbr_len.zero_count + i);
-	return (buffer);
+	result->str = buffer;
+	result->len = ft_strlen(buffer);
 }

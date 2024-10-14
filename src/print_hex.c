@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:08 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 14:09:29 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/14 15:23:25 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	calculate_len(unsigned int nbr, t_flags *flags, t_nbr_len *nbr_len)
 	nbr_len->raw_nbr_len = raw_nbr_len;
 }
 
-char	*print_hex(t_flags *flags, va_list *args)
+void	print_hex(t_flags *flags, va_list *args, t_print_result *result)
 {
 	const unsigned int	number = va_arg(*args, unsigned int);
 	t_nbr_len			nbr_len;
@@ -82,10 +82,10 @@ char	*print_hex(t_flags *flags, va_list *args)
 
 	calculate_len(number, flags, &nbr_len);
 	if (nbr_len.len == 0)
-		return (ft_strdup(""));
+		return ;
 	buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return ;
 	if (nbr_len.has_prefix)
 	{
 		buffer[0] = '0';
@@ -94,10 +94,11 @@ char	*print_hex(t_flags *flags, va_list *args)
 	ft_memset(buffer + nbr_len.has_prefix * 2, '0', nbr_len.zero_count);
 	itoa_recursive_hex(buffer, number, nbr_len.len - 1, nbr_len.has_prefix * 2
 		+ nbr_len.zero_count);
-	return (buffer);
+	result->str = buffer;
+	result->len = ft_strlen(buffer);
 }
 
-char	*print_hex_upper(t_flags *flags, va_list *args)
+void	print_hex_upper(t_flags *flags, va_list *args, t_print_result *result)
 {
 	const unsigned int	number = va_arg(*args, unsigned int);
 	t_nbr_len			nbr_len;
@@ -105,10 +106,10 @@ char	*print_hex_upper(t_flags *flags, va_list *args)
 
 	calculate_len(number, flags, &nbr_len);
 	if (nbr_len.len == 0)
-		return (ft_strdup(""));
+		return ;
 	buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return ;
 	if (nbr_len.has_prefix)
 	{
 		buffer[0] = '0';
@@ -122,5 +123,6 @@ char	*print_hex_upper(t_flags *flags, va_list *args)
 		if (buffer[nbr_len.len] >= 'a' && buffer[nbr_len.len] <= 'z')
 			buffer[nbr_len.len] -= 32;
 	}
-	return (buffer);
+	result->str = buffer;
+	result->len = ft_strlen(buffer);
 }

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:42:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/14 14:57:29 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/14 15:50:58 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ static size_t	print_spaces(const int spaces, const char conversion)
 	int		i;
 	size_t	len;
 
+	(void)conversion;
 	i = 0;
 	len = 0;
-	if (conversion == '%')
-		return (0);
 	while (i < spaces)
 	{
 		len += write(1, " ", 1);
@@ -39,43 +38,40 @@ static size_t	apply_width_and_write(t_flags *flags, const char *str,
 	size_t	len;
 
 	len = 0;
-	if (conversion == 'c')
-	{
-		str_len = 1;
-	}
 	spaces = flags->width - str_len;
 	if (str_len <= 0)
 		return (print_spaces(spaces, conversion));
 	if (flags->minus)
 	{
-		len += write(1, str, str_len);
+		write(1, str, str_len);
 		len += print_spaces(spaces, conversion);
 	}
 	else
 	{
 		len += print_spaces(spaces, conversion);
-		len += write(1, str, str_len);
+		write(1, str, str_len);
 	}
-	return (len);
+	return (len + str_len);
 }
 
 static int	get_printer_and_print(const char *format, va_list *args, int *i)
 {
-	t_flags		flags;
-	int			offset;
-	t_printer	*printer;
-	char		*str;
-	size_t		len;
+	t_flags			flags;
+	int				offset;
+	t_printer		*printer;
+	t_print_result	result;
+	size_t			len;
 
 	ft_memset(&flags, 0, sizeof(t_flags));
+	ft_memset(&result, 0, sizeof(t_print_result));
 	offset = parse_flags(format, &flags, args);
 	printer = get_printer(format[offset]);
-	str = printer->print(&flags, args);
+	printer->print(&flags, args, &result);
 	if (!printer)
 		return (-1);
-	len = apply_width_and_write(&flags, str, ft_strlen(str), printer->type);
-	if (str)
-		free((void *)str);
+	len = apply_width_and_write(&flags, result.str, result.len, printer->type);
+	if (result.str)
+		free((void *)result.str);
 	*i += offset + 1;
 	return ((int)len);
 }

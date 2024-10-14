@@ -1,23 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 21:50:32 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 14:34:56 by eebert           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include <stdio.h>
 #include "ft_printf.h"
+#include <stdio.h>
 
-int main() {
-    const char *str = "%10c\n";
-    int printed = printf(str, 0);
-    int printed2 = ft_printf(str, 0);
+#define INT_MIN -2147483648
+#define INT_MAX 2147483647
 
-    printf("printf: %d\n", printed);
-    printf("ft_printf: %d\n", printed2);
+int main(){
+   int printed = ft_printf("% .d%%\n", 0);
+   int expected = printf("% .d%%\n", 0);
+
+    printf("Expected: %d\n", expected);
+    printf("Got: %d\n", printed);
+  
 }

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:41:47 by eebert            #+#    #+#             */
-/*   Updated: 2024/10/11 14:10:44 by eebert           ###   ########.fr       */
+/*   Updated: 2024/10/14 16:26:18 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,29 @@
 static void	calculate_len(long nbr, t_flags *flags, t_nbr_len *nbr_len,
 		bool ignore_sign)
 {
-	size_t			len;
-	const size_t	raw_nbr_len = ft_numlen_long(nbr);
-	size_t			len_with_zeros;
+	size_t	len;
+	size_t	raw_nbr_len;
+	size_t	len_with_zeros;
 
+	raw_nbr_len = ft_numlen_long(nbr);
 	len_with_zeros = 0;
 	len = raw_nbr_len;
 	if (flags->dot && flags->precision == 0 && nbr == 0)
 	{
+		if ((flags->plus || flags->space) && !ignore_sign)
+		{
+			nbr_len->len = 1;
+			nbr_len->raw_nbr_len = 0;
+			nbr_len->zero_count = 0;
+			nbr_len->has_sign = true;
+			return ;
+		}
 		nbr_len->len = 0;
 		return ;
 	}
-	if ((flags->plus || flags->space || nbr < 0) && !ignore_sign)
-	{
-		len++;
-		nbr_len->has_sign = true;
-	}
-	else
-		nbr_len->has_sign = false;
+	nbr_len->has_sign = ((flags->plus || flags->space || nbr < 0)
+			&& !ignore_sign);
+	len += nbr_len->has_sign;
 	if (flags->dot)
 		len_with_zeros = len + max(flags->precision - raw_nbr_len, 0);
 	else if (flags->zero && flags->width > len && !flags->minus)
@@ -57,7 +62,7 @@ void	add_sign(char *buffer, long nbr, t_flags *flags)
 		*buffer = ' ';
 }
 
-char	*print_int(t_flags *flags, va_list *args)
+void	print_int(t_flags *flags, va_list *args, t_print_result *result)
 {
 	const int	number = va_arg(*args, int);
 	t_nbr_len	nbr_len;
@@ -65,18 +70,20 @@ char	*print_int(t_flags *flags, va_list *args)
 
 	calculate_len(number, flags, &nbr_len, false);
 	if (nbr_len.len == 0)
-		return (ft_strdup(""));
+		return ;
 	buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return ;
 	add_sign(buffer, number, flags);
 	ft_memset(buffer + nbr_len.has_sign, '0', nbr_len.zero_count);
-	itoa_recursive_long(buffer, number, nbr_len.len - 1, nbr_len.has_sign
-		+ nbr_len.zero_count);
-	return (buffer);
+	if (nbr_len.raw_nbr_len != 0)
+		itoa_recursive_long(buffer, number, nbr_len.len - 1, nbr_len.has_sign
+			+ nbr_len.zero_count);
+	result->str = buffer;
+	result->len = ft_strlen(buffer);
 }
 
-char	*print_unsigned(t_flags *flags, va_list *args)
+void	print_unsigned(t_flags *flags, va_list *args, t_print_result *result)
 {
 	const unsigned int	number = va_arg(*args, unsigned int);
 	t_nbr_len			nbr_len;
@@ -84,12 +91,15 @@ char	*print_unsigned(t_flags *flags, va_list *args)
 
 	calculate_len(number, flags, &nbr_len, true);
 	if (nbr_len.len == 0)
-		return (ft_strdup(""));
+		return ;
 	buffer = ft_calloc(nbr_len.len + 1, sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return ;
 	add_sign(buffer, number, flags);
 	ft_memset(buffer, '0', nbr_len.zero_count);
-	itoa_recursive_long(buffer, number, nbr_len.len - 1, nbr_len.zero_count);
-	return (buffer);
+	if (nbr_len.raw_nbr_len != 0)
+		itoa_recursive_long(buffer, number, nbr_len.len - 1,
+			nbr_len.zero_count);
+	result->str = buffer;
+	result->len = ft_strlen(buffer);
 }
