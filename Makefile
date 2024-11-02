@@ -15,16 +15,16 @@ $(NAME): $(LIBFT) $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
 $(LIBFT): $(LIBFT_PATH)
-	make -C $(LIBFT_PATH)
+	make -C $(LIBFT_PATH) bonus
 
-bonus: $(LIBFT) $(OBJS) $(BONUS_OBJS)
-	cp $(LIBFT) $(NAME)
-	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
+bonus: $(NAME)
 
 clean:
+	make -C $(LIBFT_PATH) clean
 	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
+	make -C $(LIBFT_PATH) fclean
 	rm -f $(NAME)
 
 re: fclean all
